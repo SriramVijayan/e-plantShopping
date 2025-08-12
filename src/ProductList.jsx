@@ -269,6 +269,16 @@ function ProductList({ onHomeClick }) {
         return cartItems ? cartItems.reduce((total, item) => total + item.quantity, 0): 0;
     }
 
+    const checkPlantInCart = (product) => {
+        const itemFound = cartItems.find((item) => item.name === product.name);
+        if (itemFound) {
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     return (
         <div>
             <div className="navbar" style={styleObj}>
@@ -308,11 +318,13 @@ function ProductList({ onHomeClick }) {
                                     <div className="product-description">{plant.description}</div>
                                     <div className="product-price">{plant.cost}</div>                                    
                                     <button 
-                                        className = {addedToCart[plant.name] ? "product-button added-to-cart" : "product-button"}                                        
+                                        className = {checkPlantInCart(plant) ? "product-button added-to-cart" : "product-button"}
+                                        //className = {addedToCart[plant.name] ? "product-button added-to-cart" : "product-button"}                                        
                                         onClick={() => handleAddToCart(plant)}
-                                        disabled={addedToCart[plant.name]}                                        
+                                        disabled = {checkPlantInCart(plant)}
+                                        //disabled={addedToCart[plant.name]}                                        
                                     >
-                                        {addedToCart[plant.name] ? 'Added to Cart' : 'Add To Cart'}
+                                        {checkPlantInCart(plant) ? 'Added to Cart' : 'Add to Cart'}                                        
                                     </button>
                                 </div>                                
                             ))}
